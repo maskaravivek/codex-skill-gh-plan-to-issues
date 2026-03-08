@@ -33,7 +33,15 @@ node scripts/validate_skill.mjs
 
 ## Usage
 
-In practice, you usually just ask Codex (with this skill) to create issues from the plan. If you want to run it yourself, use the scripts below.
+## Using as a Codex skill
+
+Typical flow:
+1) Generate a plan (Codex or Claude)
+2) Ask Codex: “Use `gh-plan-to-issues` to create GitHub issues from the plan (1 epic + up to 10 tasks).”
+
+Codex should run `gh` and return the created issue URLs.
+
+## Using as a standalone script
 
 Create a JSON spec (start from `references/spec.example.json`), then dry-run:
 
@@ -63,18 +71,3 @@ node scripts/create_issues_from_spec.mjs /path/to/spec.json --allow-duplicates
 - Filters requested labels to labels that already exist in the repo
 - Creates the epic + tasks
 - Updates the epic body to contain a `## Tasks` checklist referencing created tasks
-
-## Optional helper: Markdown plan -> JSON spec
-
-If you already have a Markdown plan/spec, generate a starter JSON spec:
-
-```bash
-node scripts/spec_from_markdown.mjs /path/to/plan.md > /tmp/gh-plan-to-issues-spec.json
-node scripts/create_issues_from_spec.mjs /tmp/gh-plan-to-issues-spec.json --dry-run
-```
-
-You can also pipe directly:
-
-```bash
-node scripts/spec_from_markdown.mjs /path/to/plan.md | node scripts/create_issues_from_spec.mjs - --dry-run
-```
