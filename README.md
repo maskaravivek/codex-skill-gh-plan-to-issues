@@ -13,27 +13,15 @@ This skill exists to make the intent unambiguous: when you ask to “create issu
 ## Requirements
 
 - `gh` installed and authenticated (`gh auth status`)
-- Node.js (to run the bundled scripts)
+- Node.js (to run the scripts)
 
 ## Install
 
-### Option A: install by copying into your Codex skills directory
+Copy this folder into your Codex skills directory and restart the Codex app (skills are loaded on startup).
 
-Codex typically reads skills from:
-- `$CODEX_HOME/skills` (if `CODEX_HOME` is set), or
-- `~/.codex/skills`
-
-Clone/copy this skill folder so it ends up at:
-
-```text
-~/.codex/skills/gh-plan-to-issues/
-```
-
-Then restart the Codex app (skills are usually loaded on startup).
-
-### Option B: install via the Codex skill installer (if available)
-
-If your Codex setup supports installing skills from a Git repo URL, point it at this repo and install the `gh-plan-to-issues` folder into your skills directory.
+Common locations:
+- `~/.codex/skills/gh-plan-to-issues/`
+- `$CODEX_HOME/skills/gh-plan-to-issues/` (if `CODEX_HOME` is set)
 
 ## Validate the skill
 
@@ -45,28 +33,15 @@ node scripts/validate_skill.mjs
 
 ## Usage
 
-You can use this skill with plans coming from:
-- the immediately previous plan/proposal in the conversation,
-- a local `.md` file, or
-- pasted plan text.
+In practice, you usually just ask Codex (with this skill) to create issues from the plan. If you want to run it yourself, use the scripts below.
 
-Internally, the workflow is always:
-1) plan -> JSON spec
-2) JSON spec -> GitHub issues
-
-In practice, you usually just ask Codex (with this skill) to create issues from the plan; it will do the creation. The scripts are there to make that behavior deterministic and repeatable.
-
-### Option 1: Create a JSON spec file directly
-
-Start from `references/spec.example.json`.
-
-2) Dry run first:
+Create a JSON spec (start from `references/spec.example.json`), then dry-run:
 
 ```bash
 node scripts/create_issues_from_spec.mjs /path/to/spec.json --dry-run
 ```
 
-3) Create issues:
+Create issues:
 
 ```bash
 node scripts/create_issues_from_spec.mjs /path/to/spec.json
